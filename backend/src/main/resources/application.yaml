@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: notification-lab
+  profiles:
+    active: m0
+  # M1까지 DB 비활성: BackendApplication 에서 DataSource/JPA autoconfig 를 exclude 했다.
+  # M1(DB 저장 + fan-out write 증폭 측정)에서 아래 datasource/jpa 블록을 되살린다.
+  # datasource:
+  #   url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/notiflab}
+  #   username: ${DATABASE_USERNAME:notiflab}
+  #   password: ${DATABASE_PASSWORD:notiflab}
+  # jpa:
+  #   hibernate:
+  #     ddl-auto: update
+
+server:
+  port: 8080
+  tomcat:
+    threads:
+      # M0 기준선. 동기 팬아웃에서 이 풀이 먼저 소진되는지가 핵심 관전 포인트다.
+      # M1~M4 동안 이 값을 바꾸지 마라 (변인 통제).
+      max: 200
+      min-spare: 10
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus
+  metrics:
+    tags:
+      application: notification-lab
+    distribution:
+      # POST /events 등 http 요청 지연을 p50/95/99 히스토그램으로 노출 (Grafana에서 본다)
+      percentiles-histogram:
+        http.server.requests: true
+
+logging:
+  level:
+    com.notification.lab: INFO
