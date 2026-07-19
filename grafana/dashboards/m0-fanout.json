@@ -1,6 +1,6 @@
 {
   "uid": "m0-fanout",
-  "title": "M0 — 동기 팬아웃은 언제 무너지나",
+  "title": "동기 팬아웃 성능 분석",
   "tags": ["notification-lab", "m0"],
   "timezone": "browser",
   "refresh": "5s",
