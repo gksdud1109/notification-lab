@@ -1,0 +1,17 @@
+# IDE (IntelliJ / VS Code)
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+
+# OS
+.DS_Store
+
+# Gradle / build 산출물
+backend/.gradle/
+backend/build/
+backend/HELP.md
+
+# Kotlin
+.kotlin/

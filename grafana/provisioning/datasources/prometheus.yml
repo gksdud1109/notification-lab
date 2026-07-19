@@ -1,0 +1,14 @@
+# elice-assignment 패턴 이식: uid를 명시해야 dashboard JSON이 안정적으로 참조한다.
+# (자동 생성 UID는 환경마다 달라져 대시보드 재현성을 깨뜨린다.)
+apiVersion: 1
+
+datasources:
+  - name: Prometheus
+    uid: prometheus
+    type: prometheus
+    access: proxy
+    url: http://prometheus:9090
+    isDefault: true
+    editable: false
+    jsonData:
+      timeInterval: 5s
