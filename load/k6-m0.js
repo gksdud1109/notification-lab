@@ -3,15 +3,6 @@ import ws from 'k6/ws';
 import { check } from 'k6';
 import { Rate } from 'k6/metrics';
 
-// ─────────────────────────────────────────────────────────────────────
-// M0 부하 시나리오 — 두 축(동접 WS, event rate)을 따로 올려
-// "어느 축이 먼저 무너뜨리나"를 본다.
-//
-// ★ 네가 직접 정할 것 (지금은 placeholder) ★
-//   - 아래 숫자가 곧 M0~M4 전체의 고정 기준선이다. 한 번 정하면 바꾸지 마라.
-//   - README의 가설/SLO와 이 숫자를 맞춰라.
-// ─────────────────────────────────────────────────────────────────────
-
 const TARGET = __ENV.TARGET || 'http://localhost:8080';
 const WS_URL = TARGET.replace('http', 'ws') + '/ws';
 

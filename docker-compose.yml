@@ -6,7 +6,7 @@ services:
     build: ./backend
     ports:
       - "8080:8080"
-    cpus: 2.0 # ← 측정 대상 자원 고정. M1~M4 내내 바꾸지 않음.(변인 통제)
+    cpus: 2.0 # 측정 대상 자원 고정
     mem_limit: 1g
     environment:
       JAVA_TOOL_OPTIONS: "-XX:+UseG1GC -XX:MaxRAMPercentage=75"
@@ -22,10 +22,13 @@ services:
   grafana:
     image: grafana/grafana:latest
     ports:
-      - "3000:3000"
+      - "3300:3300"
     environment:
       GF_AUTH_ANONYMOUS_ENABLED: "true"
       GF_AUTH_ANONYMOUS_ORG_ROLE: Admin
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
     depends_on: [ prometheus ]
 
   # k6는 부하를 걸 때만 실행:
@@ -33,7 +36,7 @@ services:
   # (호스트 코어가 app 2 + k6 2 = 4코어 이상이어야 격리가 의미 있다.)
   k6:
     image: grafana/k6:latest
-    cpus: 2.0 # ← 생성기 자원도 고정·분리
+    cpus: 2.0 # 생성기 자원도 고정·분리
     volumes:
       - ./load:/scripts:ro
     environment:

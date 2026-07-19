@@ -16,6 +16,9 @@ spring:
 server:
   port: 8080
   tomcat:
+    # tomcat_threads_* 메트릭을 켜는 스위치 (Spring 기본값이 false라 지금까지 안 나왔어)
+    mbeanregistry:
+      enabled: true
     threads:
       # M0 기준선. 동기 팬아웃에서 이 풀이 먼저 소진되는지가 핵심 관전 포인트다.
       # M1~M4 동안 이 값을 바꾸지 마라 (변인 통제).
